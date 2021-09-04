@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'json_edit_widgets.dart';
+import 'package:provider/provider.dart';
 
 final String airballSettingsTitle = "Airball Settings";
 
@@ -15,8 +16,9 @@ class AirballSettingsEditorApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: JSONDocument(
-          url: 'http://localhost:8088/airball-settings.json',
+      home: ChangeNotifierProvider(
+          create: (context) =>
+              JSONDocumentModel('http://localhost:8088/airball-settings.json'),
           child: AirballSettingsEditor()),
     );
   }
@@ -38,7 +40,8 @@ class AirballSettingsEditor extends StatelessWidget {
             children: <TableRow>[
               editRow(index++, _label('V', 'FE'), DoubleEditWidget('v_fe')),
               editRow(index++, _label('α', 'X'), DoubleEditWidget('alpha_x')),
-              editRow(index++, _label('β', 'FS'), DoubleEditWidget('beta_fs')),
+              editRow(index++, _label('β', 'FS'),
+                  DoubleEditWidget('beta_full_scale')),
             ],
           ),
         ),
