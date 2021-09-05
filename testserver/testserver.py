@@ -40,16 +40,45 @@ class TestRequestHandler(http.server.BaseHTTPRequestHandler):
         else:
             self.send_error(404)
 
+    def do_OPTIONS(self):            
+        if self.path == airball_settings_path:
+            print('OPTIONS ' + self.path)
+            self.options_airball_settings()
+        else:
+            self.send_error(404)
+
     def get_airball_settings(self):
+        response_body = bytes(json.dumps(airball_settings) + '\n', 'utf-8')
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Content-type', 'application/json')
+        self.send_header('Content-Type', 'application/json')
+        self.send_header('Content-Length', str(len(response_body)))
         self.end_headers()
-        self.wfile.write(bytes(json.dumps(airball_settings) + '\n', 'utf-8'))
+        self.wfile.write(response_body)
 
     def post_airball_settings(self):
-        global airball_settings        
-        airball_settings = json.loads(''.join([l.decode('utf-8') for l in self.rfile]))
-        print(json.dumps(airball_settings))
-    
+        global airball_settings
+        content_length = int(self.headers['Content-Length'])
+        request_body = self.rfile.read(content_length)
+        airball_settings = json.loads(request_body.decode('utf-8'))
+        response_body = 'ok'.encode('utf-8')
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Content-Type', 'text/plain')
+        self.send_header('Content-Length', str(len(response_body)))
+        self.end_headers()
+        self.wfile.write(response_body)
+
+    def options_airball_settings(self):
+        response_body = 'ok'.encode('utf-8')        
+        self.send_response(200)
+        self.send_header('Allow', 'OPTIONS, GET, POST')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST')
+        self.send_header('Access-Control-Allow-Headers', self.headers['Access-Control-Request-Headers'])
+        self.send_header('Content-Type', 'text/plain')
+        self.send_header('Content-Length', str(len(response_body)))
+        self.end_headers()
+        self.wfile.write(response_body)
+
 http.server.HTTPServer(('', 8088), TestRequestHandler).serve_forever()

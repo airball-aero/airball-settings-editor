@@ -20,6 +20,7 @@ class JSONDocumentModel extends ChangeNotifier {
   }
 
   void setValue(String name, dynamic value) {
+    print('setValue(' + name + ',' + value.toString() + ')');
     _json[name] = value;
     _postToUrl();
     notifyListeners();
@@ -31,7 +32,15 @@ class JSONDocumentModel extends ChangeNotifier {
         onError: (err) => print(err.toString()));
   }
 
-  void _postToUrl() {}
+  void _postToUrl() {
+    print('postToUrl');
+    http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        encoding: Encoding.getByName('utf-8'),
+        body: jsonEncode(_json));
+  }
 }
 
 abstract class JSONPropertyEditWidget<T> extends StatelessWidget {

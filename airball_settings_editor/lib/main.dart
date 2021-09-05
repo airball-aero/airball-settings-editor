@@ -38,10 +38,12 @@ class AirballSettingsEditor extends StatelessWidget {
           margin: EdgeInsets.all(pageMargin),
           child: Table(
             children: <TableRow>[
-              editRow(index++, _label('V', 'FE'), DoubleEditWidget('v_fe')),
-              editRow(index++, _label('α', 'X'), DoubleEditWidget('alpha_x')),
+              editRow(
+                  index++, _label('V', 'FE'), DoubleEditWidget('v_fe'), 'kias'),
+              editRow(index++, _label('α', 'X'), DoubleEditWidget('alpha_x'),
+                  'degrees'),
               editRow(index++, _label('β', 'FS'),
-                  DoubleEditWidget('beta_full_scale')),
+                  DoubleEditWidget('beta_full_scale'), 'degrees'),
             ],
           ),
         ),
@@ -52,18 +54,21 @@ class AirballSettingsEditor extends StatelessWidget {
   Widget _label(String param, String subs) {
     return RichText(
       text: TextSpan(
-        text: param,
-        style: TextStyle(fontSize: 75, fontStyle: FontStyle.italic),
+        text: param + ' ',
+        style: TextStyle(fontSize: 50, fontStyle: FontStyle.italic),
         children: <TextSpan>[
           TextSpan(
               text: subs,
-              style: TextStyle(fontSize: 40, fontStyle: FontStyle.italic)),
+              style: TextStyle(
+                fontSize: 30,
+              )),
         ],
       ),
     );
   }
 
-  TableRow editRow(int idx, Widget label, JSONPropertyEditWidget widget) {
+  TableRow editRow(
+      int idx, Widget label, JSONPropertyEditWidget widget, String units) {
     Color bgColor = stripe(idx);
     return TableRow(children: <Widget>[
       Container(
@@ -77,6 +82,12 @@ class AirballSettingsEditor extends StatelessWidget {
         padding: EdgeInsets.all(cellPadding),
         color: bgColor,
         child: widget,
+      ),
+      Container(
+        height: rowHeight,
+        padding: EdgeInsets.all(cellPadding),
+        color: bgColor,
+        child: Text(units),
       ),
     ]);
   }
