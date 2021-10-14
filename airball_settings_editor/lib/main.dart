@@ -17,8 +17,7 @@ class AirballSettingsEditorApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: ChangeNotifierProvider(
-          create: (context) =>
-              JSONDocumentModel('http://localhost:8088/airball-settings.json'),
+          create: (context) => JSONDocumentModel('/settings'),
           child: AirballSettingsEditor()),
     );
   }
@@ -27,28 +26,59 @@ class AirballSettingsEditorApp extends StatelessWidget {
 class AirballSettingsEditor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Consumer<JSONDocumentModel>(builder: (context, model, child) {
+      return AbsorbPointer(
+        absorbing: false /* !model.initialized */,
+        child: child == null ? _makeChild() : child,
+      );
+    });
+  }
+
+  Widget _makeChild() {
     int index = 0;
-    return AbsorbPointer(
-      absorbing: false, // TODO: Add "disabled" state while loading
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text(airballSettingsTitle),
         ),
-        body: Container(
-          margin: EdgeInsets.all(pageMargin),
-          child: Table(
-            children: <TableRow>[
-              editRow(
-                  index++, _label('V', 'FE'), DoubleEditWidget('v_fe'), 'kias'),
-              editRow(index++, _label('α', 'X'), DoubleEditWidget('alpha_x'),
-                  'degrees'),
-              editRow(index++, _label('β', 'FS'),
-                  DoubleEditWidget('beta_full_scale'), 'degrees'),
-            ],
+        body: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.all(pageMargin),
+            child: Table(
+              children: <TableRow>[
+                editRow(
+                    index++, _label('V', 'R'), DoubleEditWidget('v_r'), 'kias'),
+                editRow(index++, _label('V', 'FE'), DoubleEditWidget('v_fe'),
+                    'kias'),
+                editRow(index++, _label('V', 'NO'), DoubleEditWidget('v_no'),
+                    'kias'),
+                editRow(index++, _label('V', 'NE'), DoubleEditWidget('v_ne'),
+                    'kias'),
+                editRow(index++, _label('α', 'X'), DoubleEditWidget('alpha_x'),
+                    'degrees'),
+                editRow(index++, _label('α', 'Y'), DoubleEditWidget('alpha_y'),
+                    'degrees'),
+                editRow(index++, _label('α', 'REF'),
+                    DoubleEditWidget('alpha_ref'), 'degrees'),
+                editRow(index++, _label('α', 'CRIT'),
+                    DoubleEditWidget('alpha_stall'), 'degrees'),
+                editRow(index++, _label('α', 'MIN'),
+                    DoubleEditWidget('alpha_min'), 'degrees'),
+                editRow(index++, _label('V', 'FS'),
+                    DoubleEditWidget('ias_full_scale'), 'degrees'),
+                editRow(index++, _label('β', 'FS'),
+                    DoubleEditWidget('beta_full_scale'), 'degrees'),
+                editRow(index++, _label('β', 'BIAS'),
+                    DoubleEditWidget('beta_bias'), 'degrees'),
+                editRow(index++, _label('QNH', ''),
+                    DoubleEditWidget('baro_setting'), 'in Hg'),
+                editRow(index++, _label('f', 'BALL'),
+                    DoubleEditWidget('ball_smoothing_factor'), ''),
+                editRow(index++, _label('f', 'VSI'),
+                    DoubleEditWidget('vsi_smoothing_factor'), ''),
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   Widget _label(String param, String subs) {
@@ -100,6 +130,6 @@ class AirballSettingsEditor extends StatelessWidget {
   static const double titleFontSize = 20.0;
   static const double rowHeight = 100.0;
   static const double cellPadding = 10.0;
-  static const Color white = Color.fromRGBO(255, 255, 255, 1.0);
-  static const Color lightGreen = Color.fromRGBO(225, 255, 225, 1.0);
+  static const Color white = Color.fromRGBO(255, 255, 255, 1);
+  static const Color lightGreen = Color.fromRGBO(225, 255, 225, 1);
 }

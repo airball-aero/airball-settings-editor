@@ -1,0 +1,17 @@
+{
+    "ias_full_scale":150,
+    "v_r":0,
+    "v_fe":70,
+    "v_no":100,
+    "v_ne":120,
+    "alpha_stall":17,
+    "alpha_min":0,
+    "alpha_x":13,
+    "alpha_y":11,
+    "alpha_ref":15,
+    "beta_full_scale":10,
+    "beta_bias":0,
+    "baro_setting":30.12,
+    "ball_smoothing_factor":1,
+    "vsi_smoothing_factor":1
+}

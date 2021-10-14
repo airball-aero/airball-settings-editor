@@ -12,11 +12,16 @@ class JSONDocumentModel extends ChangeNotifier {
     _getFromUrl();
   }
 
+  bool initialized = false;
   final String url;
   Map<String, dynamic> _json;
 
   dynamic getValue(String name) {
     return _json[name];
+  }
+
+  bool isInitialized() {
+    return initialized;
   }
 
   void setValue(String name, dynamic value) {
@@ -27,9 +32,19 @@ class JSONDocumentModel extends ChangeNotifier {
   }
 
   void _getFromUrl() {
-    Future<http.Response> f = http.get(Uri.parse(url));
-    f.then((r) => {_json = jsonDecode(r.body), print(_json), notifyListeners()},
-        onError: (err) => print(err.toString()));
+    try {
+      Future<http.Response> f = http.get(Uri.parse(url));
+      f.then(
+          (r) => {
+                _json = jsonDecode(r.body),
+                print(_json),
+                initialized = true,
+                notifyListeners()
+              },
+          onError: (err) => print(err.toString()));
+    } catch (err) {
+      print("Request error: " + err.toString());
+    }
   }
 
   void _postToUrl() {
