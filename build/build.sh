@@ -2,7 +2,7 @@
 
 export FLUTTER_PROJ=airball_settings_editor
 
-rm -rf www
+rm -rf www/*
 mkdir -p www
 mkdir -p www/app
 

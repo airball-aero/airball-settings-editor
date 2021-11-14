@@ -9,6 +9,10 @@ filename = './airball-settings.json'
 def route_root():
     return redirect('/app/index.html', code=302)
 
+@app.route('/app/')
+def route_app_slash():
+    return redirect('/app/index.html', code=302)    
+
 @app.route('/app/<path:path>')
 def route_app(path):
     return send_from_directory('./app', path)

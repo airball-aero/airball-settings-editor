@@ -93,18 +93,44 @@ class IntEditWidget extends JSONPropertyEditWidget<int> {
 }
 
 class DoubleEditWidget extends JSONPropertyEditWidget<double> {
-  DoubleEditWidget(String name) : super(name);
+  final double min;
+  final double max;
+  final double step;
+  final String units;
+  final int decimals;
+
+  DoubleEditWidget(
+    String name, {
+    this.min = 0,
+    this.max = 100,
+    this.step = 1,
+    this.units = '',
+    this.decimals = 1,
+  }) : super(name);
+
+  double checkValue(double value) {
+    if (value < min) value = min;
+    if (value > max) value = max;
+    double result = (value / step).round() * step;
+    print('checkValue(' + value.toString() + ') -> ' + result.toString());
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<JSONDocumentModel>(
         builder: (context, model, child) => SpinBox(
-              min: 1,
-              max: 100,
-              value: getValue(model, 0.0),
-              decimals: 1,
-              step: 0.1,
+              decoration: InputDecoration(
+                suffixText: this.units,
+              ),
+              min: this.min,
+              max: this.max,
+              value: getValue(model, this.min),
+              decimals: this.decimals,
+              step: this.step,
               acceleration: 0.001,
-              onChanged: (value) => setValue(model, value),
+              textStyle: TextStyle(fontSize: 30),
+              onChanged: (value) => setValue(model, checkValue(value)),
             ));
   }
 }
