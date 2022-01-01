@@ -29,158 +29,193 @@ class AirballSettingsEditor extends StatelessWidget {
     return Consumer<JSONDocumentModel>(builder: (context, model, child) {
       return AbsorbPointer(
         absorbing: !model.initialized,
-        child: child == null ? _makeChild() : child,
+        child: child == null ? makeChild() : child,
       );
     });
   }
 
-  Widget _makeChild() {
+  Widget makeChild() {
     int index = 0;
     return Scaffold(
         appBar: AppBar(
           title: Text(airballSettingsTitle),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.all(pageMargin),
-            child: Table(
-              defaultColumnWidth: IntrinsicColumnWidth(),
-              children: <TableRow>[
-                editRow(
-                    index++,
-                    _label('α', 'X'),
-                    DoubleEditWidget('alpha_x',
-                        decimals: 1,
-                        step: 0.1,
-                        min: -angleExtreme,
-                        max: angleExtreme,
-                        units: '°')),
-                editRow(
-                    index++,
-                    _label('α', 'Y'),
-                    DoubleEditWidget('alpha_y',
-                        decimals: 1,
-                        step: 0.1,
-                        min: -angleExtreme,
-                        max: angleExtreme,
-                        units: '°')),
-                editRow(
-                    index++,
-                    _label('α', 'REF'),
-                    DoubleEditWidget('alpha_ref',
-                        decimals: 1,
-                        step: 0.1,
-                        min: -angleExtreme,
-                        max: angleExtreme,
-                        units: '°')),
-                editRow(
-                    index++,
-                    _label('α', 'CRIT'),
-                    DoubleEditWidget('alpha_stall',
-                        decimals: 1,
-                        step: 0.1,
-                        min: -angleExtreme,
-                        max: angleExtreme,
-                        units: '°')),
-                editRow(
-                    index++,
-                    _label('α', 'MIN'),
-                    DoubleEditWidget('alpha_min',
-                        decimals: 1,
-                        step: 0.1,
-                        min: -angleExtreme,
-                        max: angleExtreme,
-                        units: '°')),
-                editRow(
-                    index++,
-                    _label('β', 'FS'),
-                    DoubleEditWidget('beta_full_scale',
-                        decimals: 0,
-                        step: 5.0,
-                        min: 5.0,
-                        max: angleExtreme,
-                        units: '°')),
-                editRow(
-                    index++,
-                    _label('β', 'BIAS'),
-                    DoubleEditWidget('beta_bias',
-                        decimals: 1,
-                        step: 0.1,
-                        min: -angleExtreme,
-                        max: angleExtreme,
-                        units: '°')),
-                editRow(
-                    index++,
-                    _label('V', 'R'),
-                    DoubleEditWidget('v_r',
-                        decimals: 0,
-                        step: 1.0,
-                        min: 0.0,
-                        max: vExtreme,
-                        units: 'kias')),
-                editRow(
-                    index++,
-                    _label('V', 'FE'),
-                    DoubleEditWidget('v_fe',
-                        decimals: 0,
-                        step: 1.0,
-                        min: 0.0,
-                        max: vExtreme,
-                        units: 'kias')),
-                editRow(
-                    index++,
-                    _label('V', 'NO'),
-                    DoubleEditWidget('v_no',
-                        decimals: 0,
-                        step: 1.0,
-                        min: 0.0,
-                        max: vExtreme,
-                        units: 'kias')),
-                editRow(
-                    index++,
-                    _label('V', 'NE'),
-                    DoubleEditWidget('v_ne',
-                        decimals: 0,
-                        step: 1.0,
-                        min: 0.0,
-                        max: vExtreme,
-                        units: 'kias')),
-                editRow(
-                    index++,
-                    _label('V', 'FS'),
-                    DoubleEditWidget('ias_full_scale',
-                        decimals: 0,
-                        step: 10.0,
-                        min: 50.0,
-                        max: vExtreme,
-                        units: 'kias')),
-                editRow(
-                    index++,
-                    _label('f', 'BALL'),
-                    DoubleEditWidget('ball_smoothing_factor',
-                        decimals: 2, step: 0.01, min: 0.0, max: 1.0)),
-              ],
-            ),
-          ),
-        ));
+        body: Container(
+            width: double.infinity,
+            height: double.infinity,
+            child: SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.all(pageMargin),
+                child: Table(
+                  defaultColumnWidth: IntrinsicColumnWidth(),
+                  children: <TableRow>[
+                    editRow(
+                        index++,
+                        mathSymbolLabel('α', 'X'),
+                        DoubleEditWidget('alpha_x',
+                            decimals: 1,
+                            step: 0.1,
+                            min: -angleExtreme,
+                            max: angleExtreme,
+                            units: '°')),
+                    editRow(
+                        index++,
+                        mathSymbolLabel('α', 'Y'),
+                        DoubleEditWidget('alpha_y',
+                            decimals: 1,
+                            step: 0.1,
+                            min: -angleExtreme,
+                            max: angleExtreme,
+                            units: '°')),
+                    editRow(
+                        index++,
+                        mathSymbolLabel('α', 'REF'),
+                        DoubleEditWidget('alpha_ref',
+                            decimals: 1,
+                            step: 0.1,
+                            min: -angleExtreme,
+                            max: angleExtreme,
+                            units: '°')),
+                    editRow(
+                        index++,
+                        mathSymbolLabel('α', 'CRIT'),
+                        DoubleEditWidget('alpha_stall',
+                            decimals: 1,
+                            step: 0.1,
+                            min: -angleExtreme,
+                            max: angleExtreme,
+                            units: '°')),
+                    editRow(
+                        index++,
+                        mathSymbolLabel('α', 'MIN'),
+                        DoubleEditWidget('alpha_min',
+                            decimals: 1,
+                            step: 0.1,
+                            min: -angleExtreme,
+                            max: angleExtreme,
+                            units: '°')),
+                    editRow(
+                        index++,
+                        mathSymbolLabel('β', 'FS'),
+                        DoubleEditWidget('beta_full_scale',
+                            decimals: 0,
+                            step: 5.0,
+                            min: 5.0,
+                            max: angleExtreme,
+                            units: '°')),
+                    editRow(
+                        index++,
+                        mathSymbolLabel('β', 'BIAS'),
+                        DoubleEditWidget('beta_bias',
+                            decimals: 1,
+                            step: 0.1,
+                            min: -angleExtreme,
+                            max: angleExtreme,
+                            units: '°')),
+                    editRow(
+                        index++,
+                        mathSymbolLabel('V', 'R'),
+                        DoubleEditWidget('v_r',
+                            decimals: 0,
+                            step: 1.0,
+                            min: 0.0,
+                            max: vExtreme,
+                            units: 'kias')),
+                    editRow(
+                        index++,
+                        mathSymbolLabel('V', 'FE'),
+                        DoubleEditWidget('v_fe',
+                            decimals: 0,
+                            step: 1.0,
+                            min: 0.0,
+                            max: vExtreme,
+                            units: 'kias')),
+                    editRow(
+                        index++,
+                        mathSymbolLabel('V', 'NO'),
+                        DoubleEditWidget('v_no',
+                            decimals: 0,
+                            step: 1.0,
+                            min: 0.0,
+                            max: vExtreme,
+                            units: 'kias')),
+                    editRow(
+                        index++,
+                        mathSymbolLabel('V', 'NE'),
+                        DoubleEditWidget('v_ne',
+                            decimals: 0,
+                            step: 1.0,
+                            min: 0.0,
+                            max: vExtreme,
+                            units: 'kias')),
+                    editRow(
+                        index++,
+                        mathSymbolLabel('V', 'FS'),
+                        DoubleEditWidget('ias_full_scale',
+                            decimals: 0,
+                            step: 10.0,
+                            min: 50.0,
+                            max: vExtreme,
+                            units: 'kias')),
+                    editRow(
+                        index++,
+                        plainTextLabel('Ball smoothing factor'),
+                        DoubleEditWidget('ball_smoothing_factor',
+                            decimals: 2, step: 0.05, min: 0.0, max: 1.0)),
+                    editRow(
+                        index++,
+                        plainTextLabel('Sound scheme'),
+                        StringEnumEditWidget(
+                          'sound_scheme',
+                          allowedValues: ["flyonspeed", "stallfence"],
+                        )),
+                    editRow(
+                        index++,
+                        plainTextLabel('Audio volume'),
+                        DoubleEditWidget('audio_volume',
+                            decimals: 2, step: 0.05, min: 0.0, max: 1.0)),
+                    editRow(index++, plainTextLabel('Show altimeter'),
+                        BoolEditWidget('show_altimeter')),
+                    editRow(
+                        index++,
+                        plainTextLabel('Barometer setting'),
+                        DoubleEditWidget('baro_setting',
+                            decimals: 2,
+                            step: 0.01,
+                            min: 25.90,
+                            max: 32.01,
+                            units: 'in Hg')),
+                    editRow(
+                        index++,
+                        plainTextLabel('VSI smoothing factor'),
+                        DoubleEditWidget('vsi_smoothing_factor',
+                            decimals: 2, step: 0.05, min: 0.0, max: 1.0)),
+                  ],
+                ),
+              ),
+            )));
   }
 
-  Widget _label(String param, String subs) {
+  Widget mathSymbolLabel(String symbol, String subscript) {
     return RichText(
       text: TextSpan(
-        text: param + ' ',
+        text: symbol + ' ',
         style: TextStyle(
-            color: black,
+            color: darkgrey,
             fontSize: 50,
             fontStyle: FontStyle.italic,
             fontFamily: 'EBGaramond'),
         children: <TextSpan>[
           TextSpan(
-              text: subs,
+              text: subscript,
               style: TextStyle(fontSize: 30, fontFamily: 'EBGaramond')),
         ],
       ),
     );
+  }
+
+  Widget plainTextLabel(String text) {
+    return Text(text, style: TextStyle(fontSize: 20));
   }
 
   TableRow editRow(int idx, Widget label, JSONPropertyEditWidget widget) {
@@ -212,6 +247,7 @@ class AirballSettingsEditor extends StatelessWidget {
   static const double rowHeight = 100.0;
   static const double cellPadding = 10.0;
   static const Color black = Color.fromRGBO(0, 0, 0, 1);
+  static const Color darkgrey = Color.fromRGBO(128, 128, 128, 1);
   static const Color white = Color.fromRGBO(255, 255, 255, 1);
   static const Color lightGreen = Color.fromRGBO(225, 255, 225, 1);
 }

@@ -12,7 +12,7 @@ class JSONDocumentModel extends ChangeNotifier {
     _getFromUrl();
   }
 
-  bool initialized = false;
+  bool initialized = true;
   final String url;
   Map<String, dynamic> _json;
 
@@ -111,9 +111,7 @@ class DoubleEditWidget extends JSONPropertyEditWidget<double> {
   double checkValue(double value) {
     if (value < min) value = min;
     if (value > max) value = max;
-    double result = (value / step).round() * step;
-    print('checkValue(' + value.toString() + ') -> ' + result.toString());
-    return result;
+    return (value / step).round() * step;
   }
 
   @override
@@ -145,5 +143,42 @@ class BoolEditWidget extends JSONPropertyEditWidget<bool> {
               onChanged: (bool? value) =>
                   setValue(model, value == null ? false : value),
             ));
+  }
+}
+
+class StringEnumEditWidget extends JSONPropertyEditWidget<String> {
+  final List<String> allowedValues = [];
+
+  StringEnumEditWidget(String name, {allowedValues}) : super(name) {
+    if (allowedValues != null) {
+      for (String v in allowedValues) {
+        this.allowedValues.add(v);
+      }
+    }
+  }
+
+  List<DropdownMenuItem<String>> menuItems() {
+    return allowedValues.map((String s) {
+      return DropdownMenuItem<String>(
+        value: s,
+        child: Text(s, style: TextStyle(fontSize: 20)),
+      );
+    }).toList();
+  }
+
+  String checkValue(Object? value) {
+    if (value == null || !allowedValues.contains(value) || !(value is String)) {
+      return allowedValues[0];
+    }
+    return value;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<JSONDocumentModel>(
+        builder: (context, model, child) => DropdownButton(
+            items: menuItems(),
+            value: getValue(model, allowedValues[0]),
+            onChanged: (value) => setValue(model, checkValue(value))));
   }
 }
