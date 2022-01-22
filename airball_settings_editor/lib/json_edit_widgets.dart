@@ -21,7 +21,8 @@ class JSONDocumentModel extends ChangeNotifier {
   }
 
   bool isInitialized() {
-    return initialized;
+    return true;
+    // initialized;
   }
 
   void setValue(String name, dynamic value) {
@@ -127,7 +128,6 @@ class DoubleEditWidget extends JSONPropertyEditWidget<double> {
               decimals: this.decimals,
               step: this.step,
               acceleration: 0.001,
-              textStyle: TextStyle(fontSize: 30),
               onChanged: (value) => setValue(model, checkValue(value)),
             ));
   }

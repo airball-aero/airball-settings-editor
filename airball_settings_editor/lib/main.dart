@@ -159,7 +159,7 @@ class AirballSettingsEditor extends StatelessWidget {
                             units: 'kias')),
                     editRow(
                         index++,
-                        plainTextLabel('Ball smoothing factor'),
+                        plainTextLabel('Ball smoothing'),
                         DoubleEditWidget('ball_smoothing_factor',
                             decimals: 2, step: 0.05, min: 0.0, max: 1.0)),
                     editRow(
@@ -178,7 +178,7 @@ class AirballSettingsEditor extends StatelessWidget {
                         BoolEditWidget('show_altimeter')),
                     editRow(
                         index++,
-                        plainTextLabel('Barometer setting'),
+                        plainTextLabel('Baro setting'),
                         DoubleEditWidget('baro_setting',
                             decimals: 2,
                             step: 0.01,
@@ -187,7 +187,7 @@ class AirballSettingsEditor extends StatelessWidget {
                             units: 'in Hg')),
                     editRow(
                         index++,
-                        plainTextLabel('VSI smoothing factor'),
+                        plainTextLabel('VSI smoothing'),
                         DoubleEditWidget('vsi_smoothing_factor',
                             decimals: 2, step: 0.05, min: 0.0, max: 1.0)),
                   ],
@@ -201,21 +201,25 @@ class AirballSettingsEditor extends StatelessWidget {
       text: TextSpan(
         text: symbol + ' ',
         style: TextStyle(
-            color: darkgrey,
-            fontSize: 50,
+            color: black,
+            fontSize: 30,
             fontStyle: FontStyle.italic,
             fontFamily: 'EBGaramond'),
         children: <TextSpan>[
           TextSpan(
               text: subscript,
-              style: TextStyle(fontSize: 30, fontFamily: 'EBGaramond')),
+              style: TextStyle(fontSize: 15, fontFamily: 'EBGaramond')),
         ],
       ),
     );
   }
 
   Widget plainTextLabel(String text) {
-    return Text(text, style: TextStyle(fontSize: 20));
+    return Text(text,
+        style: TextStyle(
+          fontSize: 20,
+          fontFamily: 'EBGaramond',
+        ));
   }
 
   TableRow editRow(int idx, Widget label, JSONPropertyEditWidget widget) {
@@ -247,7 +251,7 @@ class AirballSettingsEditor extends StatelessWidget {
   static const double rowHeight = 100.0;
   static const double cellPadding = 10.0;
   static const Color black = Color.fromRGBO(0, 0, 0, 1);
-  static const Color darkgrey = Color.fromRGBO(128, 128, 128, 1);
+  static const Color grey50 = Color.fromRGBO(128, 128, 128, 1);
   static const Color white = Color.fromRGBO(255, 255, 255, 1);
   static const Color lightGreen = Color.fromRGBO(225, 255, 225, 1);
 }
