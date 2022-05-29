@@ -7,7 +7,7 @@ mkdir -p www
 mkdir -p www/app
 
 pushd ../${FLUTTER_PROJ}
-flutter build web
+flutter build web --web-renderer html
 popd
 
 cp -r ../${FLUTTER_PROJ}/build/web/* www/app

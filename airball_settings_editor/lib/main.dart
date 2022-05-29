@@ -96,6 +96,15 @@ class AirballSettingsEditor extends StatelessWidget {
                             units: '°')),
                     editRow(
                         index++,
+                        mathSymbolLabel('α', 'MAX'),
+                        DoubleEditWidget('alpha_max',
+                            decimals: 1,
+                            step: 0.1,
+                            min: -angleExtreme,
+                            max: angleExtreme,
+                            units: '°')),
+                    editRow(
+                        index++,
                         mathSymbolLabel('β', 'FS'),
                         DoubleEditWidget('beta_full_scale',
                             decimals: 0,
@@ -120,7 +129,7 @@ class AirballSettingsEditor extends StatelessWidget {
                             step: 1.0,
                             min: 0.0,
                             max: vExtreme,
-                            units: 'kias')),
+                            units: 'mph')),
                     editRow(
                         index++,
                         mathSymbolLabel('V', 'FE'),
@@ -129,7 +138,7 @@ class AirballSettingsEditor extends StatelessWidget {
                             step: 1.0,
                             min: 0.0,
                             max: vExtreme,
-                            units: 'kias')),
+                            units: 'mph')),
                     editRow(
                         index++,
                         mathSymbolLabel('V', 'NO'),
@@ -138,7 +147,7 @@ class AirballSettingsEditor extends StatelessWidget {
                             step: 1.0,
                             min: 0.0,
                             max: vExtreme,
-                            units: 'kias')),
+                            units: 'mph')),
                     editRow(
                         index++,
                         mathSymbolLabel('V', 'NE'),
@@ -147,7 +156,7 @@ class AirballSettingsEditor extends StatelessWidget {
                             step: 1.0,
                             min: 0.0,
                             max: vExtreme,
-                            units: 'kias')),
+                            units: 'mph')),
                     editRow(
                         index++,
                         mathSymbolLabel('V', 'FS'),
@@ -156,12 +165,12 @@ class AirballSettingsEditor extends StatelessWidget {
                             step: 10.0,
                             min: 50.0,
                             max: vExtreme,
-                            units: 'kias')),
+                            units: 'mph')),
                     editRow(
                         index++,
                         plainTextLabel('Ball smoothing'),
                         DoubleEditWidget('ball_smoothing_factor',
-                            decimals: 2, step: 0.05, min: 0.0, max: 1.0)),
+                            decimals: 3, step: 0.005, min: 0.0, max: 1.0)),
                     editRow(
                         index++,
                         plainTextLabel('Sound scheme'),
@@ -176,6 +185,8 @@ class AirballSettingsEditor extends StatelessWidget {
                             decimals: 2, step: 0.05, min: 0.0, max: 1.0)),
                     editRow(index++, plainTextLabel('Show altimeter'),
                         BoolEditWidget('show_altimeter')),
+                    editRow(index++, plainTextLabel('Declutter'),
+                        BoolEditWidget('declutter')),
                     editRow(
                         index++,
                         plainTextLabel('Baro setting'),
