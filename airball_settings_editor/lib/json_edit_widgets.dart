@@ -93,11 +93,10 @@ class IntEditWidget extends JSONPropertyEditWidget<int> {
   }
 }
 
-class DoubleEditWidget extends JSONPropertyEditWidget<double> {
+abstract class DoubleEditWidget extends JSONPropertyEditWidget<double> {
   final double min;
   final double max;
   final double step;
-  final String units;
   final int decimals;
 
   DoubleEditWidget(
@@ -105,7 +104,6 @@ class DoubleEditWidget extends JSONPropertyEditWidget<double> {
     this.min = 0,
     this.max = 100,
     this.step = 1,
-    this.units = '',
     this.decimals = 1,
   }) : super(name);
 
@@ -120,7 +118,7 @@ class DoubleEditWidget extends JSONPropertyEditWidget<double> {
     return Consumer<JSONDocumentModel>(
         builder: (context, model, child) => SpinBox(
               decoration: InputDecoration(
-                suffixText: this.units,
+                suffixText: getUnits(model),
               ),
               min: this.min,
               max: this.max,
@@ -130,6 +128,42 @@ class DoubleEditWidget extends JSONPropertyEditWidget<double> {
               acceleration: 0.001,
               onChanged: (value) => setValue(model, checkValue(value)),
             ));
+  }
+
+  String getUnits(JSONDocumentModel model);
+}
+
+class FixedUnitsEditWidget extends DoubleEditWidget {
+  final String units;
+
+  FixedUnitsEditWidget(
+    String name, {
+    String this.units = '',
+    double min = 0,
+    double max = 1,
+    double step = 0.1,
+    int decimals = 1,
+  }) : super(name, min: min, max: max, step: step, decimals: decimals) {}
+
+  String getUnits(JSONDocumentModel model) {
+    return units;
+  }
+}
+
+class VariableUnitsEditWidget extends DoubleEditWidget {
+  final String unitsProperty;
+
+  VariableUnitsEditWidget(
+    String name, {
+    String this.unitsProperty = '',
+    double min = 0,
+    double max = 1,
+    double step = 0.1,
+    int decimals = 1,
+  }) : super(name, min: min, max: max, step: step, decimals: decimals) {}
+
+  String getUnits(JSONDocumentModel model) {
+    return model.getValue(unitsProperty);
   }
 }
 
